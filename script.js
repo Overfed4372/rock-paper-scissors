@@ -95,8 +95,11 @@ function playRound (playerSelectionClassName) {
         playerSelection = "scissors";
         console.log("Player Selection equals scissors");
     }
+    playerChoiceNumber.textContent = playerSelection;
 
     let computerSelection = getComputerChoice();
+    computerChoiceNumber.textContent = computerSelection;
+
     let result;
     //Debug
     console.log(`Computer's choice: ${computerSelection}`);
@@ -118,6 +121,20 @@ const buttons = [document.querySelector('.button.rock') ,
                  document.querySelector('.button.paper'), 
                  document.querySelector('.button.scissors')];
 
+const playerChoiceText = document.createElement('div');
+playerChoiceText.textContent = "You chose: ";
+playerChoiceText.setAttribute('class', 'playerChoice text');
+
+const playerChoiceNumber = document.createElement('span');
+playerChoiceNumber.setAttribute('class', 'playerChoice number');
+
+const computerChoiceText = document.createElement('div');
+computerChoiceText.textContent = "Computer chose: ";
+computerChoiceText.setAttribute('class', 'computreChoice text');
+
+const computerChoiceNumber = document.createElement('span');
+computerChoiceNumber.setAttribute('class', 'computerChoice number');
+
 const resultTextNote = document.createElement('div');
 resultTextNote.textContent = 'Result';
 resultTextNote.setAttribute('class' , 'reusult textNote');
@@ -127,7 +144,10 @@ resultNumber.setAttribute('class' , 'result number');
 
 bodyContainer.appendChild(resultTextNote);
 bodyContainer.appendChild(resultNumber);
-
+bodyContainer.appendChild(playerChoiceText);
+playerChoiceText.appendChild(playerChoiceNumber);
+bodyContainer.appendChild(computerChoiceText);
+computerChoiceText.appendChild(computerChoiceNumber);
 
 //Store scores
 let userScore = 0;
