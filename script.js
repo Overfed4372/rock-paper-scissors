@@ -81,8 +81,9 @@ function resultOfRound (playerSelection, computerSelection ) {
     };      
 }
 
-function playRound (playerSelectionClassName) {
+function playRound (event) {
     // let playerSelection = prompt("rock, paper, scissors?");
+    let playerSelectionClassName = event.target.getAttribute("class");
     let playerSelection;
     
     if (playerSelectionClassName === "button rock") {
@@ -107,11 +108,37 @@ function playRound (playerSelectionClassName) {
     result = resultOfRound(playerSelection, computerSelection);
     console.log(result);
     if (result === "Withdraw") {
-        return 0;
+        equalRounds += 1;
     } else if (result === "User wins") {
-        return 1;
+        userScore += 1;
     } else if (result === "Computer wins") {
-        return 2;
+        computerScore += 1;
+    }
+    roundNumber ++;
+    console.log(`Round Number: ${roundNumber}`);
+    resultNumber.textContent = `User Score: ${userScore}
+                            , Computer Score: ${computerScore}
+                            , Equal Rounds: ${equalRounds}` ; 
+    if (userScore === 5) {
+        resultOf5Rounds.textContent = "Congratulations, you won!";
+        playerChoiceNumber.textContent = "";
+        computerChoiceNumber.textContent = "";
+        userScore = 0;
+        computerScore = 0;
+        equalRounds = 0;
+        roundNumber = 0;
+        return;
+    } else if (computerScore === 5) {
+        resultOf5Rounds.textContent = "Computer won!";
+        playerChoiceNumber.textContent = "";
+        computerChoiceNumber.textContent = "";
+        userScore = 0;
+        computerScore = 0;
+        equalRounds = 0;
+        roundNumber = 0;
+        return;
+    } else {
+        resultOf5Rounds.textContent = "";
     }
 
 }
@@ -142,12 +169,16 @@ resultTextNote.setAttribute('class' , 'reusult textNote');
 const resultNumber = document.createElement('div');
 resultNumber.setAttribute('class' , 'result number');
 
+const resultOf5Rounds = document.createElement('div');
+resultOf5Rounds.setAttribute('class', 'totalResult');
+
 bodyContainer.appendChild(resultTextNote);
 bodyContainer.appendChild(resultNumber);
 bodyContainer.appendChild(playerChoiceText);
 playerChoiceText.appendChild(playerChoiceNumber);
 bodyContainer.appendChild(computerChoiceText);
 computerChoiceText.appendChild(computerChoiceNumber);
+bodyContainer.appendChild(resultOf5Rounds);
 
 //Store scores
 let userScore = 0;
@@ -155,29 +186,14 @@ let computerScore = 0;
 let equalRounds = 0;
 let roundNumber = 0;
 //One round
-let round;
+let round = 0;
 
 //Play a round and change the scores
 buttons.forEach((value) => {
     // console.log(value.getAttribute('class'));
     value.addEventListener('click' , function (event) {
         // console.log(event.target.getAttribute("class"));
-        round = playRound(event.target.getAttribute("class"));
-        roundNumber ++;
-        console.log(`Round Number: ${roundNumber}`);
-        if (round === 1 ) {
-            userScore += 1;
-        } else if (round === 2) {
-            computerScore += 1;
-        } else if (round === 0){
-            equalRounds += 1;
-        } else {
-            // return undefined;
-        }
-        resultNumber.textContent = `User Score: ${userScore}
-                                    , Computer Score: ${computerScore}
-                                    , Equal Rounds: ${equalRounds}` ; 
-
+        round = playRound(event);
     });
 });
 
