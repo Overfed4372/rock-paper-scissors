@@ -113,13 +113,26 @@ function playRound (playerSelectionClassName) {
 
 }
 //DOM sections
+const bodyContainer = document.querySelector('body');
 const buttons = [document.querySelector('.button.rock') , 
                  document.querySelector('.button.paper'), 
                  document.querySelector('.button.scissors')];
 
+const resultTextNote = document.createElement('div');
+resultTextNote.textContent = 'Result';
+resultTextNote.setAttribute('class' , 'reusult textNote');
+
+const resultNumber = document.createElement('div');
+resultNumber.setAttribute('class' , 'result number');
+
+bodyContainer.appendChild(resultTextNote);
+bodyContainer.appendChild(resultNumber);
+
+
 //Store scores
 let userScore = 0;
 let computerScore = 0;
+let equalRounds = 0;
 let roundNumber = 0;
 //One round
 let round;
@@ -137,10 +150,13 @@ buttons.forEach((value) => {
         } else if (round === 2) {
             computerScore += 1;
         } else if (round === 0){
-            
+            equalRounds += 1;
         } else {
             // return undefined;
         }
+        resultNumber.textContent = `User Score: ${userScore}
+                                    , Computer Score: ${computerScore}
+                                    , Equal Rounds: ${equalRounds}` ; 
 
     });
 });
